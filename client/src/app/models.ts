@@ -26,12 +26,12 @@ export interface LineItem {
 export interface Order {
   username: string;
   password: string;
-  cart: LineItem[]
+  items: LineItem[]
 }
 
 export interface Confirmation {
   orderId: string;
   paymentId: string;
   total: number;
-  timestamp: Date;
+  timestamp: string;
 }

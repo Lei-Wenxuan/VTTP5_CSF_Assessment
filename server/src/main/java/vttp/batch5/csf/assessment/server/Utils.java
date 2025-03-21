@@ -1,5 +1,6 @@
 package vttp.batch5.csf.assessment.server;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.bson.Document;
@@ -59,7 +60,7 @@ public class Utils {
         .add("order_id", payment.getOrderId())
         .add("payer", payment.getPayer())
         .add("payee", payment.getPayee())
-        .add("payment", payment.getPayee())
+        .add("payment", payment.getPayment())
         .build();
   }
 
@@ -74,11 +75,12 @@ public class Utils {
   }
   
   public static JsonObject successJson(Success s) {
+    // String orderDate = new SimpleDateFormat("yyyy-MM-dd").parse(s.getOrderDate().toString()).toString();    
     return Json.createObjectBuilder()
       .add("orderId", s.getOrderId())
       .add("paymentId", s.getPaymentId())
       .add("total", s.getTotal())
-      .add("timestamp", toMilli(s.getOrderDate()))
+      .add("timestamp", s.getOrderDate().toString())
       .build();
   }
 

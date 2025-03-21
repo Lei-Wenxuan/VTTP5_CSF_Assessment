@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Confirmation } from '../models';
+import { PlaceOrderComponent } from './place-order.component';
 
 @Component({
   selector: 'app-confirmation',
@@ -7,11 +8,19 @@ import { Confirmation } from '../models';
   templateUrl: './confirmation.component.html',
   styleUrl: './confirmation.component.css'
 })
-export class ConfirmationComponent {
+export class ConfirmationComponent implements OnInit {
 
   // TODO: Task 5
+  // @Input({ required: true })
+  // confirmation!: Confirmation
 
-  @Input({ required: true })
-  confirmation!: Confirmation
+  @ViewChild(PlaceOrderComponent) placeOrderComponent!: PlaceOrderComponent;
+  
+  confirmation!: Confirmation;
 
+  ngOnInit(): void {
+    console.info(this.confirmation)
+    this.confirmation = this.placeOrderComponent.confirmation
+  }
+  
 }

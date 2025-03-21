@@ -20,7 +20,7 @@ public class RestaurantRepository {
             """;
 
     public static final String SQL_INSERT_SUCCESS = """
-            insert into place_order (order_id, payment_id, order_date, total, username)
+            insert into place_orders (order_id, payment_id, order_date, total, username)
             values (?, ?, ?, ?, ?);
             """;
 
@@ -36,6 +36,7 @@ public class RestaurantRepository {
             return true;
         } catch (Exception e) {
             System.err.println("Error in adding to place_order");
+            e.printStackTrace();
             return false;
         }
         
