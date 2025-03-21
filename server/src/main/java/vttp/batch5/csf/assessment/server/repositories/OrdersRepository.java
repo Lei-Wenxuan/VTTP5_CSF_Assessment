@@ -9,8 +9,11 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import jakarta.json.JsonArray;
 import vttp.batch5.csf.assessment.server.Utils;
 import vttp.batch5.csf.assessment.server.models.Menu;
+import vttp.batch5.csf.assessment.server.models.Payment;
+import vttp.batch5.csf.assessment.server.models.Success;
 
 @Repository
 public class OrdersRepository {
@@ -42,6 +45,32 @@ public class OrdersRepository {
   // TODO: Task 4
   // Write the native MongoDB query for your access methods in the comment below
   //
-  //  Native MongoDB query here
+  // db.orders.insert({
+  //   _id: 'abcd1234',
+  //   order_id: 'abcd1234',
+  //   payment_id: 'xyz789',
+  //   username: 'fred',
+  //   total: 23.10,
+  //   timestamp: '23-dec',
+  //   items: [
+  //       { id:'xxx', price: 1.40, quantity: 2 },
+  //       { id:'yyy', price: 2.40, quantity: 4 },
+  //   ]
+  // })
+  //
+  public Document insertSuccess(Payment p, Success s, JsonArray a) {
+    Document toInsert = new Document();
+    toInsert.put("_id", p.getOrderId());
+    toInsert.put("order_id", p.getOrderId());
+    toInsert.put("payment_id", s.getPaymentId());
+    toInsert.put("username", p.getPayer());
+    toInsert.put("timestamp", s.getOrderDate());
+
+    List<String> items = new ArrayList<>();
+    
+    
+    toInsert.put("items")
+    
+  }
   
 }

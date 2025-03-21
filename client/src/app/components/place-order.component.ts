@@ -47,8 +47,8 @@ export class PlaceOrderComponent implements OnInit {
     console.info(">>> form: ", order)
     this.restaurantService.placeOrder(order).subscribe(
       (data: any) => {
+        console.info(">>> data: " + data)
         this.router.navigate(['/confirm-order'])
-
     //     console.log(data)
     //     const orderId = data.orderId;
     //     alert(`Order ${orderId} created successfully!`)
