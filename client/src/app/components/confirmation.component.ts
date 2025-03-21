@@ -19,7 +19,7 @@ export class ConfirmationComponent implements OnInit {
   confirmation!: Confirmation;
 
   ngOnInit(): void {
-    console.info(this.confirmation)
+    console.info(this.confirmation.timestamp)
     this.confirmation = this.placeOrderComponent.confirmation
   }
   
