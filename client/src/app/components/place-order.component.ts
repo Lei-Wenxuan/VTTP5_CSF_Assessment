@@ -36,7 +36,7 @@ export class PlaceOrderComponent implements OnInit {
     this.form = this.createForm();
     this.menus$.subscribe((menus) => {
       this.menus = menus;
-      this.form.patchValue({ cart: this.menus });
+      this.form.patchValue({ items: this.menus });
       menus.forEach((i) => {
         this.totalPrice += i.price * i.quantity;
       });
@@ -50,7 +50,7 @@ export class PlaceOrderComponent implements OnInit {
       (data: any) => {
         console.info('>>> data: ' + data);
         // this.confirmation.next(data);
-        this.confirmation = JSON.parse(data.message);
+        this.confirmation = JSON.parse(JSON.stringify(data.message));
         console.info(this.confirmation);
         this.cartStore.resetItems;
         this.router.navigate(['/confirm-order']);
