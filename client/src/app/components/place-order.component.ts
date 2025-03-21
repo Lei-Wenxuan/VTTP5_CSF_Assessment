@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CartStore } from '../cart.store';
+import { Confirmation, Menu, Order } from '../models';
+import { RestaurantService } from '../restaurant.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-place-order',
@@ -6,8 +12,71 @@ import { Component } from '@angular/core';
   templateUrl: './place-order.component.html',
   styleUrl: './place-order.component.css'
 })
-export class PlaceOrderComponent {
+export class PlaceOrderComponent implements OnInit {
 
+  @Output()
+  confirmation = new Subject<Confirmation>()
+  
   // TODO: Task 3
+  private restaurantService = inject(RestaurantService)
+  private cartStore = inject(CartStore)
+  private router = inject(Router);
+  
+  private menus$ = this.cartStore.menus$;
+
+  private fb: FormBuilder = inject(FormBuilder)
+  
+  protected form!: FormGroup;
+
+  protected menus: Menu[] = [];
+  protected totalPrice = 0;
+
+  ngOnInit(): void {
+    this.form = this.createForm();
+    this.menus$.subscribe(menus => {
+      this.menus = menus
+      this.form.patchValue({cart: this.menus})
+      menus.forEach((i) => {
+        this.totalPrice += i.price * i.quantity
+      })
+    })
+  }
+
+  protected processForm() {
+    const order: Order = this.form.value;
+    console.info(">>> form: ", order)
+    this.restaurantService.placeOrder(order).subscribe(
+      (data: any) => {
+        this.router.navigate(['/confirm-order'])
+
+    //     console.log(data)
+    //     const orderId = data.orderId;
+    //     alert(`Order ${orderId} created successfully!`)
+    //     this.cartStore.resetCart();
+    //     this.router.navigate([''])  
+      },
+      (error) => {
+        const errorMessage = error.error?.message
+        alert(errorMessage)
+      }
+    )
+  }
+
+  protected invalid(): boolean {
+    return this.form.invalid
+  }
+
+  protected startOver() {
+    this.cartStore.resetItems
+    this.router.navigate([''])
+  }
+  
+  private createForm(): FormGroup {
+    return this.fb.group({
+      username: this.fb.control<string>('', [ Validators.required ]),
+      password: this.fb.control<string>('', [ Validators.required ]),
+      cart: this.fb.control<Menu[]>([])
+    })
+  }
 
 }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Confirmation } from '../models';
 
 @Component({
   selector: 'app-confirmation',
@@ -9,5 +10,8 @@ import { Component } from '@angular/core';
 export class ConfirmationComponent {
 
   // TODO: Task 5
+
+  @Input({ required: true })
+  confirmation!: Confirmation
 
 }

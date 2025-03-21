@@ -1,1 +1,4 @@
 # TODO: Task 1.1
+
+mongoimport -d restaurant -c menus --type=json --jsonArray --file=menus.json
+mongoimport -d restaurant -c menus --type=json --jsonArray --file=menus.json --uri=<railway_mongo_public_url>
