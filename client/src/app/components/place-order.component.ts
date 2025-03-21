@@ -50,7 +50,7 @@ export class PlaceOrderComponent implements OnInit {
       (data: any) => {
         console.info('>>> data: ' + data);
         // this.confirmation.next(data);
-        this.confirmation = JSON.parse(JSON.stringify(data.message));
+        this.confirmation = JSON.parse(data.message);
         console.info(this.confirmation);
         this.cartStore.resetItems;
         this.router.navigate(['/confirm-order']);
