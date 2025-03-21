@@ -21,8 +21,8 @@ export class MenuComponent implements OnInit {
   protected totalQuantity$!: Observable<number>;
   protected totalPrice$!: Observable<number>;
 
-  // protected totalPrice = 0
-  // protected totalQuantity = 0
+  protected totalPrice = 0
+  protected totalQuantity = 0
 
   protected menus!: Menu[]
 
@@ -38,9 +38,20 @@ export class MenuComponent implements OnInit {
     this.totalPrice$ = this.cartStore.totalPriceInCart;
   }
 
-  getQuantity(m: Menu) {
-
+  isDisabled(): boolean {
+    return !(this.getTotalQuantity() > 0);
   }
+  
+  getTotalQuantity(): number {
+    this.totalQuantity$.subscribe(data => {
+      this.totalQuantity = data;
+    }) 
+    return this.totalQuantity;
+  }
+
+  // getQuantity(m: Menu): number {
+    
+  // }
   
   toShowQuantity(m: Menu): boolean {
     if (false) {

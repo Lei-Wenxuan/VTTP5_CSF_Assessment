@@ -1,5 +1,6 @@
 package vttp.batch5.csf.assessment.server.repositories;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
@@ -22,6 +23,7 @@ public class OrdersRepository {
   private MongoTemplate template;
   
   public static final String C_SERIES = "menus";
+  public static final String C_ORDERS = "orders";
 
   public static final String F_NAME = "name";
 
@@ -64,13 +66,11 @@ public class OrdersRepository {
     toInsert.put("order_id", p.getOrderId());
     toInsert.put("payment_id", s.getPaymentId());
     toInsert.put("username", p.getPayer());
-    toInsert.put("timestamp", s.getOrderDate());
-
-    List<String> items = new ArrayList<>();
+    toInsert.put("timestamp", s.getOrderDate());   
+    toInsert.put("items", a.toString());
     
-    
-    toInsert.put("items")
-    
+    Document insertedDoc = template.insert(toInsert, C_ORDERS);
+    return insertedDoc;
   }
   
 }
